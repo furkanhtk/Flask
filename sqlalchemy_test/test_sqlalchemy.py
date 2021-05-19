@@ -15,8 +15,8 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
-class Book(Base):
-    __tablename__ = 'book'
+class Parameters(Base):
+    __tablename__ = 'parameters'
 
     id = Column(Integer, primary_key=True)
     Frequency = Column(String(250), nullable=False)
