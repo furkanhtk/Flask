@@ -1,31 +1,54 @@
-from flask import Flask,render_template
-import views
-from database import Database
-from parameter import Parameter
+from flask import Flask, request, flash, url_for, redirect, render_template
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database_parameters.sqlite3'
+
+db = SQLAlchemy(app)
 
 
+class Parameters(db.Model):
+    id = db.Column('id', db.Integer, primary_key=True)
+    date_data = db.Column(db.DateTime())
+    input_frequency_data = db.Column(db.String())
+    input_power_data = db.Column(db.String())
+    measured_raw_power_data = db.Column(db.String())
+    angle_data = db.Column(db.String())
+    calculated_power_data = db.Column(db.String())
 
 
-def create_app():
-    app = Flask(__name__)
-    app.config.from_object("settings")
-    app.add_url_rule("/", view_func=views.home_page)
-    app.add_url_rule("/Measurement", view_func=views.Measurement_page)
-    app.add_url_rule("/parameters", view_func=views.parameters_page, methods=["GET", "POST"])
-    app.add_url_rule("/parameters/<int:parameter_key>", view_func=views.parameter_page)
-    app.add_url_rule("/new-parameter", view_func=views.parameter_add_page, methods=["GET", "POST"])
-
-    db = Database(r"C:\Users\Furkan\Desktop\Flask\parameters.sqlite")
-    app.config["db"] = db
+def __init__(self, date_data, input_frequency_data, input_power_data, measured_raw_power_data, angle_data,
+             calculated_power_data):
+    self.date_data = date_data
+    self.input_frequency_data = input_frequency_data
+    self.input_power_data = input_power_data
+    self.measured_raw_power_data = measured_raw_power_data
+    self.angle_data = angle_data
+    self.calculated_power_data = calculated_power_data
 
 
-    return app
+@app.route('/')
+def parameters_page():
+    return render_template('parameters_page.html', Parameters=Parameters.query.all())
 
 
+@app.route('/new', methods=['GET', 'POST'])
+def new():
+    if request.method == 'POST':
+        if not request.form['date_data'] or not request.form['input_frequency_data'] or not request.form['input_power_data']:
+            flash('Please enter all the fields', 'error')
+        else:
+            parameter = Parameters(request.form['date_data'], request.form['input_frequency_data'],
+                                   request.form['input_power_data'], request.form['measured_raw_power_data'],
+                                   request.form['angle_data'], request.form['calculated_power_data'])
+
+            db.session.add(parameter)
+            db.session.commit()
+            flash('Record was successfully added')
+            return redirect(url_for('parameters_page'))
+    return render_template('new_parameter.html')
 
 
-if __name__ == "__main__":
-    app = create_app()
-    port = app.config.get("PORT", 5000)
-    app.run(host="0.0.0.0", port=port)
-    #app.run(host="0.0.0.0")
+if __name__ == '__main__':
+    db.create_all()
+    app.run(debug=True)
