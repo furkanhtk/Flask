@@ -1,50 +1,45 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
-# Let's import our Book and Base classes from our database_setup.py file
-
 from test_sqlalchemy import Parameters, Base
 
 
-# bind the engine to the metadata of the Base class so that the
-# declaratives can be accessed through a DBSession instance
-engine = create_engine('sqlite:///parameters_database.db')
-
-Base.metadata.bind = engine
-
-DBSession = sessionmaker(bind=engine)
-# A DBSession() instance establishes all conversations with the database
-# and represents a "staging zone" for all the objects loaded into the
-# database session object.
-session = DBSession()
 
 
-# Create
+def get_parameters(session):
+    parameters_list = session.query(Parameters).all()
+    for parameter in parameters_list:
 
-parameterOne = Parameters(Frequency="1 GHz", Power="-10 dbm",)
-session.add(parameterOne)
-session.commit()
+        print("id:{} F:{} P:{}".format(parameter.id, parameter.Frequency, parameter.Power))
 
-# Read
-
-session.query(Parameters).all()
-session.query(Parameters).first()
-
-# Update
-editedParameter = session.query(Parameters).filter_by(id=1).one()
+    return parameters_list
 
 
 
-editedParameter.Power = "99 dbm"
-session.add(editedParameter)
-session.commit()
+def add_parameter(session, freq, pwr):
+    parameter_to_add = Parameters(Frequency=freq, Power=pwr)
+    session.add(parameter_to_add)
+    session.commit()
+    # session.query(Parameters).first()
 
 
+def update_parameter(session, id_number, freq, pwr):
+    edited_parameter = session.query(Parameters).filter_by(id=id_number).one()
+    edited_parameter.Frequency = freq
+    edited_parameter.Power = pwr
+    session.add(edited_parameter)
+    session.commit()
+
+def delete_parameter(session,parameter_key):
+    parameter_to_delete = session.query(Parameters).filter_by(Frequency='1 GHz').one()
+    session.delete(parameter_to_delete)
+    session.commit()
 
 
+if __name__ == "__main__":
+    engine = create_engine('sqlite:///parameters_database.db')
+    Base.metadata.bind = engine
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
+    get_parameters(session)
 
-# Delete
-
-ParameterToDelete = session.query(Parameters).filter_by(Frequency='1 GHz').one()
-session.delete(ParameterToDelete)
-session.commit()
+    update_parameter(session,5,)
