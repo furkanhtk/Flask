@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8f315551-61f6-407e-bab7-e46cf6f6cc0b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parameters_database.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sqlalchemy_test/test_sqlalchemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/sqlalchemy_test/test_sqlalchemy.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -205,7 +203,7 @@
       <workItem from="1621178590957" duration="4074000" />
       <workItem from="1621411306526" duration="4897000" />
       <workItem from="1621458908434" duration="1608000" />
-      <workItem from="1621462834277" duration="1391000" />
+      <workItem from="1621462834277" duration="1893000" />
     </task>
     <task id="LOCAL-00001" summary="SQLalchemy files move to test folder">
       <created>1621463127382</created>
