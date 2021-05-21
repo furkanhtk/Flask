@@ -15,7 +15,7 @@ def create_app():
     app.add_url_rule("/parameters/<int:parameter_key>", view_func=views.parameter_page)
     app.add_url_rule("/new-parameter", view_func=views.parameter_add_page, methods=["GET", "POST"])
 
-    db = Database(r"C:\Users\Furkan\Desktop\Flask\parameters.sqlite")
+    db = Database(r"E:\Flask\Flask\parameters.sqlite")
     app.config["db"] = db
 
 
