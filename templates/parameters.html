@@ -2,6 +2,65 @@
 {% block title %}Parameters list{% endblock %}
 {% block content %}
     <h1 class="title">Parameters</h1>
+    <form action="" method="post" name="parameter_edit">
+      <div class="field">
+        <label for="frequency" class="label">Frequency</label>
+        <div class="control">
+          <input type="text" name="frequency" class="input" required="required"/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="power" class="label">Power</label>
+        <div class="control">
+          <input type="number" name="power" class="input" required="required"/>
+        </div>
+      </div>
+
+        <div class="field">
+        <label for="g_ref" class="label">Gref</label>
+        <div class="control">
+          <input type="number" name="g_ref" class="input" required="required"/>
+        </div>
+      </div>
+
+        <div class="field">
+        <label for="distance" class="label">Distance</label>
+        <div class="control">
+          <input type="number" name="distance" class="input" required="required"/>
+        </div>
+      </div>
+
+
+        <div class="field">
+        <label for="mode" class="label">Mode</label>
+        <label class="checkbox">
+              <input type="checkbox" name="mode1" value="1" /> Calibration Cable
+        </label>
+            <label class="checkbox">
+              <input type="checkbox" name="mode2" value="2"  /> Calibration Free Space
+        </label>
+            <label class="checkbox">
+              <input type="checkbox" name="mode3" value="3" /> Measurement
+        </label>
+      </div>
+
+
+        <div class="field">
+        <label for="antenna_type" class="label">Antenna Type</label>
+        <div class="control">
+          <input type="text" name="antenna_type" class="input" required="required"/>
+        </div>
+      </div>
+
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-danger is-small" type="submit" name="Add" value="Add"> Add </button>
+        </div>
+      </div>
+    </form>
+
 
     {% if parameters %}
     <form action="" method="post" name="parameter_list">
@@ -9,15 +68,22 @@
       {% for parameter in parameters %}
       <tr>
         <td>
-            <p>Date: {{ parameter.Frequency }}</p>
+            <label class="checkbox">
+              <input type="checkbox" name="parameter_ids" value="{{ parameter.id }}"/>
+        </label>
+            id: {{ parameter.id }} D: {{ parameter.date }}
+            F: {{ parameter.input_frequency }} P: {{ parameter.input_Power }}
+            G_ref: {{ parameter.g_ref }} D: {{ parameter.distance }}
+            Type: {{ parameter.antenna_type }} Mode: {{ parameter.mode }}
+            <a href = {{ url_for("parameter_page" ,parameter_id=parameter.id ) }}>Result</a>
+
       </td>
       </tr>
       {% endfor %}
     </table>
-
       <div class="field is-grouped">
         <div class="control">
-          <button class="button is-danger is-small">Delete</button>
+          <button class="button is-danger is-small" type="submit" name="Delete" value="Delete"> Delete </button>
         </div>
       </div>
     </form>

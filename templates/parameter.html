@@ -1,3 +1,4 @@
+
 {% extends "layout.html" %}
 {% block title %}Parameter{% endblock %}
 {% block content %}
@@ -5,14 +6,36 @@
 
     <table class="table">
       <tr>
-        <th>Frequency:</th>
-        <td>{{ parameter.frequency }}</td>
+        <th>Id :</th>
+        <td>{{ parameter.id }}</td>
       </tr>
-      {% if parameter.power %}
+      <tr>
+        <th>Date :</th>
+        <td>{{ parameter.date }}</td>
+      </tr>
+      <tr>
+        <th>Frequency:</th>
+        <td>{{ parameter.input_frequency }}</td>
+      </tr>
       <tr>
         <th>Power :</th>
-        <td>{{ parameter.power }}</td>
+        <td>{{ parameter.input_Power }}</td>
       </tr>
-      {% endif %}
+     <tr>
+        <th>G_ref :</th>
+        <td>{{ parameter.g_ref }}</td>
+      </tr>
+     <tr>
+        <th>Distance :</th>
+        <td>{{ parameter.distance }}</td>
+      </tr>
+     <tr>
+        <th>Antenna Type :</th>
+        <td>{{ parameter.antenna_type }}</td>
+      </tr>
+     <tr>
+        <th>Mode :</th>
+        <td>{{ parameter.mode }}</td>
+      </tr>
     </table>
 {% endblock %}
