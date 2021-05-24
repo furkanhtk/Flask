@@ -5,6 +5,12 @@ from database import Base,Parameters
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import time
+########################
+import plotly.express as px
+import numpy as np
+import plotly
+import random
 
 
 def home_page():
@@ -14,9 +20,18 @@ def home_page():
 
 
 def Measurement_page():
+    raw_data = np.genfromtxt("dipole_pattern.csv", delimiter=',')
+    theta = np.arange(0, 361, 1)
     today = datetime.today()
-    day_name = today.strftime("%A")
-    return render_template("Measurement.html", day=today)
+    fig = px.line_polar(r=raw_data, theta=theta, start_angle=0)
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return render_template("Measurement.html", day=today,graphJSON=graphJSON)
+
+
+    # today = datetime.today()
+    # day_name = today.strftime("%A")
+    # return render_template("Measurement.html", day=today)
+
 
 
 def parameters_page():
@@ -61,4 +76,21 @@ def parameter_page(parameter_id):
     return render_template("parameter.html", parameter=parameter)
 
 
+def test():
+    return render_template('test.html')
 
+
+def data():
+    # Data Format
+    # [TIME, Temperature, Humidity]
+
+    Temperature = random.random() * 100
+    Humidity = random.random() * 55
+
+    data = [time.time() * 1000, Temperature, Humidity]
+
+    response = make_response(json.dumps(data))
+
+    response.content_type = 'application/json'
+
+    return response

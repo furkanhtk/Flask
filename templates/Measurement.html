@@ -2,5 +2,22 @@
 {% block title %}Home{% endblock %}
 {% block content %}
     <h1>Measurement Page</h1>
+
+
+
+
+
+    <div id="chart" class="chart"></div>
+
+
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script type="text/javascript">
+        var graphs = {{graphJSON | safe}};
+        Plotly.plot('chart',graphs,{});
+    </script>
+
+
     <p>Date: {{ day }}</p>
+    <h6><a href="/">Return to index page</a></h6>
 {% endblock %}

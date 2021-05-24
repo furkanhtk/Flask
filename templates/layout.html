@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <title>ANTENNA MEASUREMENT SYSTEM {% block title %}{% endblock %}</title>
     <link rel="stylesheet"
           href="{{ url_for('static', filename='bulma.css') }}"/>
@@ -22,6 +23,9 @@
           </span>
           <span class="navbar-item">
             <a class="button is-link" href="{{ url_for('parameters_page') }}">Parameters</a>
+          </span>
+          <span class="navbar-item">
+            <a class="button is-link" href="{{ url_for('test') }}">test</a>
           </span>
         </div>
       </nav>
